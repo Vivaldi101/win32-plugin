@@ -53,7 +53,8 @@ void GuiThreadFunc(HINSTANCE hInstance) {
 
 // Exported function to start GUI window & message loop
 extern "C" __declspec(dllexport) void StartPluginWindow() {
-    if (running) return; // Already running
+    if (running) 
+       return; // Already running
     running = true;
     hInst = (HINSTANCE)GetModuleHandle(NULL);
     //guiThread = std::thread(GuiThreadFunc, hInst);
@@ -62,12 +63,9 @@ extern "C" __declspec(dllexport) void StartPluginWindow() {
 
 // Exported function to stop GUI window and message loop
 extern "C" __declspec(dllexport) void StopPluginWindow() {
-    if (!running) return;
+    if (!running) 
+       return;
     running = false;
-
-    if (hwnd) {
-        PostMessage(hwnd, WM_CLOSE, 0, 0);
-    }
 
     //if (guiThread.joinable()) {
         //guiThread.join();
@@ -92,7 +90,7 @@ LRESULT CALLBACK PluginWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
         FillRect(hdc, &rect, (HBRUSH)(COLOR_WINDOW + 1));
 
         // Draw something trivial - e.g. text centered
-        const char* text = "Plugin Window.";
+        const char* text = "Hello from Plugin Window.";
         SetBkMode(hdc, TRANSPARENT);
         DrawTextA(hdc, text, -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
